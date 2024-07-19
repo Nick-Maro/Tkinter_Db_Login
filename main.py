@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from db import check,cursor_
+from window2_settings import settings_window2
 row=100 #number of rows
 col=100 #number of columns
 
@@ -9,12 +10,17 @@ window.geometry("600x600")
 window.title("Prova")
 window.resizable(True,True)
 
+def open_window2():
+    window.destroy()
+    settings_window2()
+
 def submit():
     user=username.get()
     passw=password.get()
     user_id=check(user,passw,cursor_)
     if user_id:
         print(f"User logged in: {user_id}")
+        open_window2()
     else:
         print("Authentication failed")
 
@@ -48,4 +54,7 @@ submit.grid(row=20,column=50)
 if __name__ == "__main__":
     window.mainloop()
 
-    
+while should_reopen_window1:
+    window1 = tk.Tk()  # Create a new window1 instance
+    # ... (Add widgets and functionality to window1)
+    window1.mainloop()  # Run the main loop for window1    
