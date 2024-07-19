@@ -5,15 +5,17 @@ from window2_settings import settings_window2
 row=100 #number of rows
 col=100 #number of columns
 
+#configuring the authentication window
 window = Tk()
 window.geometry("600x600")
 window.title("Prova")
 window.resizable(True,True)
 
+#when accessing to window2 (admin window)
 def open_window2():
     window.destroy()
     settings_window2()
-
+#logging
 def submit():
     user=username.get()
     passw=password.get()
@@ -33,7 +35,7 @@ for i in range(row):
 for i in range(col):
     window.columnconfigure(i, weight=1)
 
-
+#frontend
 username = StringVar()
 username_entry = ttk.Entry(window, textvariable=username,width=50)
 username_entry.grid(row=5,column=50)
@@ -51,10 +53,14 @@ text_2.grid(row=8,column=50)
 submit = Button(window,width=10,height=10,foreground="green",background="green",command=submit)
 submit.grid(row=20,column=50)
 
+#mainloop
 if __name__ == "__main__":
     window.mainloop()
 
-while should_reopen_window1:
-    window1 = tk.Tk()  # Create a new window1 instance
-    # ... (Add widgets and functionality to window1)
-    window1.mainloop()  # Run the main loop for window1    
+    
+#editing
+
+#while should_reopen_window1:
+#    window1 = tk.Tk()  
+#  
+#    window1.mainloop()   
