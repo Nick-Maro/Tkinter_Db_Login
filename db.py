@@ -1,5 +1,5 @@
 import mysql.connector
-
+#connect to db
 db = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -9,7 +9,7 @@ db = mysql.connector.connect(
 )
 cursor_ = db.cursor()
 
-
+#searching id which username and password match
 def check(user,passw,cursor_):
     cursor_.execute("SELECT id FROM db WHERE username = %s AND password = %s LIMIT 1", (user, passw))
     result = cursor_.fetchone()
