@@ -41,3 +41,4 @@ class AdminFrame(Frame):
         print(arr, "    ")
         id = int(arr[3]) -1
         print("selected id :", id)
+        
