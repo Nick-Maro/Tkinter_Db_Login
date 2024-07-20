@@ -8,7 +8,11 @@ db = mysql.connector.connect(
 
 )
 cursor_ = db.cursor()
-
+cursor2_ = db.cursor()
+def tree():
+  cursor2_.execute("SELECT * FROM db")
+  result = cursor2_.fetchall()
+  return result
 #searching id which username and password match
 def check(user, password, cursor_):
     try:

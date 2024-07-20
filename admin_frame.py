@@ -1,6 +1,6 @@
 from tkinter import *
-
-
+from db import tree
+from tkinter import ttk
 
 class AdminFrame(Frame):
     def __init__(self, master):
@@ -14,7 +14,17 @@ class AdminFrame(Frame):
 
         logout_button = Button(self, text="Logout", command=self.logout)
         logout_button.grid(row=2, column=0, sticky="nsew")
-
+        #Treeview
+        cols = ("Privileges","id","Username","Password")
+        tab = ttk.Treeview(self,columns=cols, show='headings')
+        tab.heading('Privileges', text='Privileges')
+        tab.heading('id', text='id')
+        tab.heading('Username', text='Username')
+        tab.heading('Password', text='Password')
+        result = tree()
+        for row in result:
+            tab.insert('',END,values=row)
+        tab.grid(row=0,column=5)
     def logout(self):
         # Switch back to the login page
         self.master.switch_to_login()
