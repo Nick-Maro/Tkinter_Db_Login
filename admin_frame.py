@@ -14,17 +14,30 @@ class AdminFrame(Frame):
 
         logout_button = Button(self, text="Logout", command=self.logout)
         logout_button.grid(row=2, column=0, sticky="nsew")
-        #Treeview
-        cols = ("Privileges","Username","Password","Id")
-        tab = ttk.Treeview(self,columns=cols, show='headings')
-        tab.heading('Privileges', text='Privileges')
-        tab.heading('Username', text='Username')
-        tab.heading('Password', text='Password')
-        tab.heading('Id', text='Id')
+
+        delete_button = Button(self, text="Delete", command=self.get_selected_index)
+        delete_button.grid(row=3, column=5, sticky="nsew")
+
+        # Treeview
+        cols = ("Privileges", "Username", "Password", "Id")
+        self.user_treeview = ttk.Treeview(self, columns=cols, show='headings')
+        self.user_treeview.heading('Privileges', text='Privileges')
+        self.user_treeview.heading('Username', text='Username')
+        self.user_treeview.heading('Password', text='Password')
+        self.user_treeview.heading('Id', text='Id')
         result = tree()
+
         for row in result:
-            tab.insert('',END,values=row)
-        tab.grid(row=0,column=5)
+            self.user_treeview.insert('', END, values=row)
+        self.user_treeview.grid(row=0, column=5)
+
     def logout(self):
         # Switch back to the login page
         self.master.switch_to_login()
+
+    def get_selected_index(self):
+        selected_item = self.user_treeview.selection()[0]
+        arr = list(selected_item)
+        print(arr, "    ")
+        id = int(arr[3]) -1
+        print("selected id :", id)
