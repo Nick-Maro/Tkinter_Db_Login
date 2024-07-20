@@ -15,12 +15,12 @@ class AdminFrame(Frame):
         logout_button = Button(self, text="Logout", command=self.logout)
         logout_button.grid(row=2, column=0, sticky="nsew")
         #Treeview
-        cols = ("Privileges","id","Username","Password")
+        cols = ("Privileges","Username","Password","Id")
         tab = ttk.Treeview(self,columns=cols, show='headings')
         tab.heading('Privileges', text='Privileges')
-        tab.heading('id', text='id')
         tab.heading('Username', text='Username')
         tab.heading('Password', text='Password')
+        tab.heading('Id', text='Id')
         result = tree()
         for row in result:
             tab.insert('',END,values=row)
