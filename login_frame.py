@@ -22,17 +22,23 @@ class LoginFrame(Frame):
 
         login_button = Button(self, text="Login", command=self.login)
         login_button.grid(row=3, column=0, columnspan=2, sticky="nsew")
-
+        #match password,username and see if the user has privileges
     def login(self):
         username = self.username_entry.get()
         password = self.password_entry.get()
-        #switch for admin
-        if check(username, password, cursor_)[1] == 1:
-            print(check(username, password, cursor_)[0]," id. (Admin)")
-            self.switch_to_admin()
-        #switch for user
-        if check(username,password,cursor_)[1] == 0:
-            print(check(username, password, cursor_)[0]," id. (User)")
-            self.switch_to_user()
-        else:
+
+        try:
+            user_data = check(username, password, cursor_)  # Assuming check returns a tuple (user_id, is_admin)
+            user_id, is_admin = user_data
+
+            if is_admin == 1:
+                print(f"{user_id} id. (Admin)")
+                self.switch_to_admin()
+            elif is_admin == 0:
+                print(f"{user_id} id. (User)")
+                self.switch_to_user()
+            else:
+                print("Invalid admin flag")
+        except Exception as e:
+            print("An error occurred:", e)
             print("Invalid credentials")
