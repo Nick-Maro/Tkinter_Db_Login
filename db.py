@@ -1,4 +1,5 @@
 import mysql.connector
+import logging
 #connect to db
 db = mysql.connector.connect(
     host="localhost",
@@ -28,3 +29,13 @@ def check(user, password, cursor_):
         #error
         print(f"Error: {e}")
         return None
+    
+def delete(index):
+    try:
+        cursor_.execute("DELETE FROM db WHERE id = %s", (index,))
+        db.commit()
+        logging.info(f"User with ID {index} deleted successfully")
+        return True
+    except Exception as e:
+        logging.error(f"Error deleting user with ID {index}: {e}")
+        return False
