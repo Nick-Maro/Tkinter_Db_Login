@@ -1,14 +1,9 @@
 from tkinter import *
-from tkinter import ttk
+
 
 # Import login and admin frames
 from login_frame import LoginFrame
 from admin_frame import AdminFrame
-
-# Import any necessary functions from db.py
-# (assuming you have a file named db.py)
-from db import check, cursor_
-
 
 class App(Tk):
     def __init__(self):
