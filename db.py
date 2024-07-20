@@ -10,12 +10,17 @@ db = mysql.connector.connect(
 cursor_ = db.cursor()
 
 #searching id which username and password match
-def check(user,passw,cursor_):
-    cursor_.execute("SELECT id FROM db WHERE username = %s AND password = %s LIMIT 1", (user, passw))
-    result = cursor_.fetchone()
+def check(user, password, cursor_):
+    try:
+        cursor_.execute("SELECT id, Privileges FROM db WHERE username = %s AND password = %s LIMIT 1", (user, password))
+        result = cursor_.fetchone()
 
-    if result:
-      user_id = result[0]
-      return user_id
-    
-    return None
+        if result:
+            return list(result)  
+        else:
+            return None
+
+    except Exception as e:
+        #error
+        print(f"Error: {e}")
+        return None
