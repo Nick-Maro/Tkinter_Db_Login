@@ -8,10 +8,9 @@ from user_frame import UserFrame
 class App(Tk):
     def __init__(self):
         super().__init__()
-
+        
         self.title("Frame-Based Page Switcher")
         self.geometry("600x400")
-
         # Create instances of login and admin frames
         self.login_frame = LoginFrame(self, self.switch_to_admin,self.switch_to_user)
         self.admin_frame = AdminFrame(self)
