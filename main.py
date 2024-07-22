@@ -20,7 +20,6 @@ class App(Tk):
         self.admin_frame.grid_forget()
         self.user_frame.grid_forget()
 
-
         #login -> admin
     def switch_to_admin(self):
         self.login_frame.grid_forget()
