@@ -22,6 +22,7 @@ class LoginFrame(Frame):
 
         login_button = Button(self, text="Login", command=self.login)
         login_button.grid(row=3, column=0, columnspan=2, sticky="nsew")
+        
         #match password,username and see if the user has privileges
     def login(self):
         username = self.username_entry.get()
@@ -42,3 +43,4 @@ class LoginFrame(Frame):
         except Exception as e:
             print("An error occurred:", e)
             print("Invalid credentials")
+            Label(self, text="retry, wrong username or password",fg="red").grid(row=3, column=3, sticky="w")

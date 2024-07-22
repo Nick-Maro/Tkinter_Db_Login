@@ -39,3 +39,8 @@ def delete(index):
     except Exception as e:
         logging.error(f"Error deleting user with ID {index}: {e}")
         return False
+def add(username,password):
+    sql = "INSERT INTO db (username, password) VALUES (%s, %s)"
+    valori = (username, password)
+    cursor_.execute(sql,valori)
+    db.commit()
