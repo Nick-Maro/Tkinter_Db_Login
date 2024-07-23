@@ -6,8 +6,8 @@ from tkinter import messagebox
 class AdminFrame(Frame):
     def __init__(self, master):
         super().__init__(master)
-
         self.master = master
+        
         for i in range(100):
             self.columnconfigure(i, weight=1)
         for i in range(100):
@@ -37,9 +37,6 @@ class AdminFrame(Frame):
 
         submit_button = Button(self, text="Add New user", command=self.submit_user, bg="Green")
         submit_button.grid(row=0, column=20, sticky="nsew")
-
-        refresh_button = Button(self, text="Refresh", command=self.update_tree, bg="Yellow")
-        refresh_button.grid(row=0, column=22, sticky="nsew")
         # Treeview
         cols = ("Privileges", "Username", "Password", "Id")
         self.user_treeview = ttk.Treeview(self, columns=cols, show='headings')
@@ -50,7 +47,7 @@ class AdminFrame(Frame):
         self.user_treeview.bind("<Button-3>", self.on_right_click)
         self.update_tree()
         self.user_treeview.grid(row=0, column=5, columnspan=5)
-
+    
         #functions
     def update_tree(self):
         self.user_treeview.delete(*self.user_treeview.get_children())  # Clear existing items
@@ -58,7 +55,7 @@ class AdminFrame(Frame):
         for row in data:
             self.user_treeview.insert('', END, values=row)
         self.user_treeview.update()  # Force GUI update
-
+        print('refreshed')
     def logout(self):
         # Switch back to the login page
         self.master.switch_to_login()
