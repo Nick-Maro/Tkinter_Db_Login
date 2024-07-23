@@ -1,19 +1,40 @@
 import mysql.connector
-import logging
-#connect to db
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="",
-    database="db_tkinter"
 
-)
+# Replace with your actual credentials
+hostname = "sql7.freesqldatabase.com"
+database = "sql7721681"
+username = "sql7721681"
+password = "zrPv6w65lL"
+port = 3306
+
+try:
+    db = mysql.connector.connect(
+        host=hostname,
+        database=database,
+        user=username,
+        password=password,
+        port=port
+    )
+
+    print("Connection established successfully!")
+
+except mysql.connector.Error as err:
+    print("Connection failed:", err)
+
+
+
 cursor_ = db.cursor()
 cursor2_ = db.cursor()
-def tree():
-  cursor2_.execute("SELECT * FROM db")
-  result = cursor2_.fetchall()
-  return result
+def tree(columns=None):
+    query = "SELECT " + (", ".join(columns) if columns else "*") + " FROM db"
+    try:
+        cursor2_.execute(query)
+        result = cursor2_.fetchall()
+        return result
+    except mysql.connector.Error as err:
+        print("Database query error:", err)
+        return None  # Or handle the error differently
+
 #searching id which username and password match
 def check(user, password, cursor_):
     try:
@@ -34,10 +55,10 @@ def delete(index):
     try:
         cursor_.execute("DELETE FROM db WHERE id = %s", (index,))
         db.commit()
-        logging.info(f"User with ID {index} deleted successfully")
+        #logging.info(f"User with ID {index} deleted successfully")
         return True
     except Exception as e:
-        logging.error(f"Error deleting user with ID {index}: {e}")
+        #logging.error(f"Error deleting user with ID {index}: {e}")
         return False
 def add(username,password):
     sql = "INSERT INTO db (username, password) VALUES (%s, %s)"

@@ -38,6 +38,8 @@ class AdminFrame(Frame):
         submit_button = Button(self, text="Add New user", command=self.submit_user, bg="Green")
         submit_button.grid(row=0, column=20, sticky="nsew")
 
+        refresh_button = Button(self, text="Refresh", command=self.update_tree, bg="Yellow")
+        refresh_button.grid(row=0, column=22, sticky="nsew")
         # Treeview
         cols = ("Privileges", "Username", "Password", "Id")
         self.user_treeview = ttk.Treeview(self, columns=cols, show='headings')
@@ -51,11 +53,11 @@ class AdminFrame(Frame):
 
         #functions
     def update_tree(self):
-        # Refresh the Treeview (repopulate with updated data)
-        self.user_treeview.delete(*self.user_treeview.get_children())
-        result = tree()
-        for row in result:
+        self.user_treeview.delete(*self.user_treeview.get_children())  # Clear existing items
+        data = tree()  # Fetch data from database
+        for row in data:
             self.user_treeview.insert('', END, values=row)
+        self.user_treeview.update()  # Force GUI update
 
     def logout(self):
         # Switch back to the login page

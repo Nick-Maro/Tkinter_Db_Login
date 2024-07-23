@@ -1,6 +1,5 @@
 from tkinter import *
 
-
 # Import login and admin frames
 from login_frame import LoginFrame
 from admin_frame import AdminFrame
