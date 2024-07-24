@@ -34,7 +34,7 @@ def tree(columns=None):
     except mysql.connector.Error as err:
         print("Database query error:", err)
         return None  # Or handle the error differently
-
+ 
 #searching id which username and password match
 def check(user, password, cursor_):
     try:
@@ -65,3 +65,5 @@ def add(username,password):
     valori = (username, password)
     cursor_.execute(sql,valori)
     db.commit()
+#def change_password(old_password,id):
+#    sql = ""

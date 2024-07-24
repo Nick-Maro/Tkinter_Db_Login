@@ -13,20 +13,21 @@ class App(Tk):
         # Create instances of login and admin frames
         self.login_frame = LoginFrame(self, self.switch_to_admin,self.switch_to_user)
         self.admin_frame = AdminFrame(self)
-        self.user_frame = UserFrame(self)
+        self.user_frame = None
         # Initially, show only the login frame
         self.login_frame.grid(row=0, column=0, sticky="nsew")
         self.admin_frame.grid_forget()
-        self.user_frame.grid_forget()
+    
 
         #login -> admin
     def switch_to_admin(self):
         self.login_frame.grid_forget()
         self.admin_frame.grid(row=0, column=0, sticky="nsew")
         #login -> user
-    def switch_to_user(self):
+    def switch_to_user(self, user_id):  # Add user_id as argument
         self.login_frame.grid_forget()
-        self.user_frame.grid(row=0,column=0,sticky="nsew")
+        self.user_frame = UserFrame(self, user_id)  # Create UserFrame with user_id
+        self.user_frame.grid(row=0, column=0, sticky="nsew")
         #admin -> login
     def switch_to_login(self):
         self.admin_frame.grid_forget()

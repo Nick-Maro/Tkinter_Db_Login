@@ -37,6 +37,9 @@ class AdminFrame(Frame):
 
         submit_button = Button(self, text="Add New user", command=self.submit_user, bg="Green")
         submit_button.grid(row=0, column=20, sticky="nsew")
+
+        #refresh_button = Button(self, text="Refresh", command=self.update_tree, bg="Yellow")
+        # refresh_button.grid(row=0, column=22, sticky="nsew")
         # Treeview
         cols = ("Privileges", "Username", "Password", "Id")
         self.user_treeview = ttk.Treeview(self, columns=cols, show='headings')
@@ -47,6 +50,7 @@ class AdminFrame(Frame):
         self.user_treeview.bind("<Button-3>", self.on_right_click)
         self.update_tree()
         self.user_treeview.grid(row=0, column=5, columnspan=5)
+
     
         #functions
     def update_tree(self):
@@ -95,4 +99,5 @@ class AdminFrame(Frame):
         if item:
             menu = Menu(self, tearoff=0)
             menu.add_command(label="Delete", command=self.delete_index)
+            menu.add_command(label="Add",command=self.submit_user)
             menu.tk_popup(event.x, event.y)
