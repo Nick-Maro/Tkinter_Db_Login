@@ -25,9 +25,11 @@ class App(Tk):
         self.login_frame.grid_forget()
         self.admin_frame.grid(row=0, column=0, sticky="nsew")
         #login -> user
-    def switch_to_user(self):
+    def switch_to_user(self, user_id):
+        # Access user information using user_id
         self.login_frame.grid_forget()
-        self.user_frame.grid(row=0,column=0,sticky="nsew")
+        self.user_frame.grid(row=0, column=0, sticky="nsew")
+        # Additional logic for user frame initialization
         #admin -> login
     def switch_to_login(self):
         self.admin_frame.grid_forget()

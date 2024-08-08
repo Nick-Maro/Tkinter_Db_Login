@@ -1,55 +1,63 @@
 from tkinter import *
-from db import tree, delete, add
 from tkinter import ttk
 from tkinter import messagebox
+from db import tree, delete, add
 
 class AdminFrame(Frame):
     def __init__(self, master):
         super().__init__(master)
 
         self.master = master
+        self.configure(bg="#f0f0f0")
+        self.grid(padx=20, pady=20, sticky="nsew")
+
         for i in range(100):
             self.columnconfigure(i, weight=1)
-        for i in range(100):
             self.rowconfigure(i, weight=1)
 
-        # Create UI elements for the admin page
-        Label(self, text="Admin Panel", font=("Arial", 24)).grid(row=0, column=0, sticky="nsew")
-        Label(self, text="Admin-specific content or functionalities here").grid(row=1, column=0, sticky="nsew")
+        # Admin Panel Label
+        Label(self, text="Admin Panel", font=("Arial", 24, "bold"), bg="#f0f0f0", fg="#333").grid(row=0, column=0, columnspan=20, pady=(0, 20), sticky="nsew")
 
-        logout_button = Button(self, text="Logout", command=self.logout)
-        logout_button.grid(row=2, column=0, sticky="nsew")
+        # Username, Password, and New User Labels & Entries
+        Label(self, text="New User:", font=("Arial", 12), bg="#f0f0f0", fg="#555").grid(row=1, column=15, sticky="e")
+        Label(self, text="Username:", font=("Arial", 12), bg="#f0f0f0", fg="#555").grid(row=1, column=16, sticky="e", padx=(10, 5))
+        self.username_entry = ttk.Entry(self, font=("Arial", 12), width=15)
+        self.username_entry.grid(row=1, column=17, sticky="w", padx=(0, 10))
+        Label(self, text="Password:", font=("Arial", 12), bg="#f0f0f0", fg="#555").grid(row=1, column=18, sticky="e", padx=(10, 5))
+        self.password_entry = ttk.Entry(self, font=("Arial", 12), show="*", width=15)
+        self.password_entry.grid(row=1, column=19, sticky="w", padx=(0, 10))
 
-        delete_button = Button(self, text="Delete", command=self.delete_index, bg="Red")
-        delete_button.grid(row=3, column=5, sticky="nsew")
+        # Add New User Button
+        submit_button = ttk.Button(self, text="Add New User", command=self.submit_user)
+        submit_button.grid(row=1, column=20, padx=10, pady=10, sticky="nsew")
 
-        Label(self, text="Username:").grid(row=0, column=16, sticky="w")
-
-        self.username_entry = Entry(self)
-        self.username_entry.grid(row=0, column=17, sticky="w")
-
-        Label(self, text="Password:").grid(row=0, column=18, sticky="w")
-
-        self.password_entry = Entry(self, show="*")  # Hide password input
-        self.password_entry.grid(row=0, column=19, sticky="w")
-
-        Label(self, text="New user-").grid(row=0, column=15, sticky="w")
-
-        submit_button = Button(self, text="Add New user", command=self.submit_user, bg="Green")
-        submit_button.grid(row=0, column=20, sticky="nsew")
-
-        # Treeview
+        # Treeview to display users
         cols = ("Privileges", "Username", "Password", "Id")
-        self.user_treeview = ttk.Treeview(self, columns=cols, show='headings')
+        self.user_treeview = ttk.Treeview(self, columns=cols, show='headings', height=10)
         self.user_treeview.heading('Privileges', text='Privileges')
         self.user_treeview.heading('Username', text='Username')
         self.user_treeview.heading('Password', text='Password')
         self.user_treeview.heading('Id', text='Id')
-        self.user_treeview.bind("<Button-3>", self.on_right_click)
+        self.user_treeview.column("Privileges", anchor="center", width=100)
+        self.user_treeview.column("Username", anchor="center", width=100)
+        self.user_treeview.column("Password", anchor="center", width=100)
+        self.user_treeview.column("Id", anchor="center", width=50)
+        self.user_treeview.bind("<Button-3>", self.on_right_click)  # Right-click menu binding
         self.update_tree()
-        self.user_treeview.grid(row=0, column=5, columnspan=5)
+        self.user_treeview.grid(row=2, column=0, columnspan=20, padx=10, pady=10, sticky="nsew")
 
-        #functions
+        # Logout and Delete Buttons
+        logout_button = ttk.Button(self, text="Logout", command=self.logout)
+        logout_button.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
+        
+        delete_button = ttk.Button(self, text="Delete Selected", command=self.delete_index)
+        delete_button.grid(row=3, column=18, columnspan=3, padx=10, pady=10, sticky="nsew")
+
+        # Center and configure grid weights
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_columnconfigure(20, weight=1)
+        self.grid_rowconfigure(2, weight=1)
+
     def update_tree(self):
         # Refresh the Treeview (repopulate with updated data)
         self.user_treeview.delete(*self.user_treeview.get_children())
@@ -65,15 +73,12 @@ class AdminFrame(Frame):
         try:
             selected_item = self.user_treeview.selection()[0]
             item_values = self.user_treeview.item(selected_item)['values']
-            id = int(item_values[3])
+            user_id = int(item_values[3])
 
             # Delete the user from the database
-            delete(id)
-
+            delete(user_id)
             self.update_tree()
-            #for the message
-            #messagebox.showinfo("Success", "User deleted successfully")
-            #
+            messagebox.showinfo("Success", "User deleted successfully")
         except IndexError:
             messagebox.showerror("Error", "No item selected")
         except ValueError:
@@ -86,14 +91,23 @@ class AdminFrame(Frame):
         password = self.password_entry.get()
         add(username, password)
         self.update_tree()
-        #for the message
-        #messagebox.showinfo("Success", "User added successfully")
-        #
+        messagebox.showinfo("Success", "User added successfully")
 
     def on_right_click(self, event):
-        #menu on right_click
-        item = self.user_treeview.item(self.user_treeview.identify("item", event.x, event.y))
+        # Create a context menu on right-click
+        item = self.user_treeview.identify_row(event.y)
         if item:
             menu = Menu(self, tearoff=0)
             menu.add_command(label="Delete", command=self.delete_index)
-            menu.tk_popup(event.x, event.y)
+            menu.tk_popup(event.x_root, event.y_root)
+
+# Example of how to use the AdminFrame
+if __name__ == "__main__":
+    root = Tk()
+    root.title("Admin Panel")
+    root.geometry("900x600")
+
+    frame = AdminFrame(root)
+    frame.pack(expand=True, fill='both')
+
+    root.mainloop()
