@@ -10,28 +10,28 @@ class LoginFrame(Frame):
         self.switch_to_admin = switch_to_admin
         self.switch_to_user = switch_to_user
 
-        # Apply some styling
+        
         self.configure(bg="#f0f0f0")
         self.grid(padx=20, pady=20)
 
-        # Create a stylish header
+        
         Label(self, text="Login", font=("Arial", 28, "bold"), bg="#f0f0f0", fg="#333").grid(row=0, column=0, columnspan=2, pady=(0, 20), sticky="nsew")
 
-        # Username Label and Entry
+        
         Label(self, text="Username:", font=("Arial", 12), bg="#f0f0f0", fg="#555").grid(row=1, column=0, sticky="e", pady=10)
         self.username_entry = ttk.Entry(self, font=("Arial", 12), width=25)
         self.username_entry.grid(row=1, column=1, sticky="w", pady=10, padx=(10, 0))
 
-        # Password Label and Entry
+        
         Label(self, text="Password:", font=("Arial", 12), bg="#f0f0f0", fg="#555").grid(row=2, column=0, sticky="e", pady=10)
         self.password_entry = ttk.Entry(self, font=("Arial", 12), show="*", width=25)
         self.password_entry.grid(row=2, column=1, sticky="w", pady=10, padx=(10, 0))
 
-        # Login Button
+        
         login_button = ttk.Button(self, text="Login", command=self.login)
         login_button.grid(row=3, column=0, columnspan=2, pady=20, ipadx=10, ipady=5, sticky="nsew")
 
-        # Center the widgets
+       
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
 
@@ -40,7 +40,7 @@ class LoginFrame(Frame):
         password = self.password_entry.get()
 
         try:
-            user_data = check(username, password, cursor_)  # Assuming check returns a tuple (user_id, is_admin)
+            user_data = check(username, password, cursor_)  
             user_id, is_admin = user_data
             global current_user_id
             if is_admin == 1:
@@ -59,7 +59,7 @@ class LoginFrame(Frame):
             print("An error occurred:", e)
             Label(self, text="Retry, wrong username or password", fg="red", bg="#f0f0f0", font=("Arial", 10)).grid(row=4, column=0, columnspan=2, sticky="nsew")
 
-# Example of how to use the LoginFrame
+
 if __name__ == "__main__":
     def admin_view():
         print("Switched to admin view")

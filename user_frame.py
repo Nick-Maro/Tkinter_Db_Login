@@ -14,10 +14,10 @@ class UserFrame(Frame):
             self.columnconfigure(i, weight=1)
             self.rowconfigure(i, weight=1)
 
-        # User Panel Label
+   
         Label(self, text="User Panel", font=("Arial", 24, "bold"), bg="#f0f0f0", fg="#333").grid(row=0, column=0, columnspan=20, pady=(0, 20), sticky="nsew")
 
-        # User-specific functionalities (Example: View Profile)
+       
         view_profile_button = ttk.Button(self, text="View Profile", command=self.view_profile)
         view_profile_button.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
 
@@ -27,31 +27,31 @@ class UserFrame(Frame):
         change_password_button = ttk.Button(self, text="Change Password", command=self.change_password)
         change_password_button.grid(row=1, column=2, padx=10, pady=10, sticky="nsew")
 
-        # Logout Button
+        
         logout_button = ttk.Button(self, text="Logout", command=self.logout)
         logout_button.grid(row=2, column=0, columnspan=3, padx=10, pady=20, sticky="nsew")
 
-        # Center and configure grid weights
+        
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(2, weight=1)
 
     def view_profile(self):
-        # Placeholder function to view the user's profile
+        
         messagebox.showinfo("View Profile", "User profile details displayed here.")
 
     def update_profile(self):
-        # Placeholder function to update the user's profile
+        
         messagebox.showinfo("Update Profile", "User profile update functionality.")
 
     def change_password(self):
-        # Placeholder function to change the user's password
+        
         messagebox.showinfo("Change Password", "Password change functionality.")
 
     def logout(self):
-        # Switch back to the login page
+        
         self.master.switch_to_login_user()
 
-# Example of how to use the UserFrame
+
 if __name__ == "__main__":
     def switch_to_login_user():
         print("Switched to login user view")

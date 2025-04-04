@@ -15,10 +15,10 @@ class AdminFrame(Frame):
             self.columnconfigure(i, weight=1)
             self.rowconfigure(i, weight=1)
 
-        # Admin Panel Label
+       
         Label(self, text="Admin Panel", font=("Arial", 24, "bold"), bg="#f0f0f0", fg="#333").grid(row=0, column=0, columnspan=20, pady=(0, 20), sticky="nsew")
 
-        # Username, Password, and New User Labels & Entries
+       
         Label(self, text="New User:", font=("Arial", 12), bg="#f0f0f0", fg="#555").grid(row=1, column=15, sticky="e")
         Label(self, text="Username:", font=("Arial", 12), bg="#f0f0f0", fg="#555").grid(row=1, column=16, sticky="e", padx=(10, 5))
         self.username_entry = ttk.Entry(self, font=("Arial", 12), width=15)
@@ -27,11 +27,11 @@ class AdminFrame(Frame):
         self.password_entry = ttk.Entry(self, font=("Arial", 12), show="*", width=15)
         self.password_entry.grid(row=1, column=19, sticky="w", padx=(0, 10))
 
-        # Add New User Button
+        
         submit_button = ttk.Button(self, text="Add New User", command=self.submit_user)
         submit_button.grid(row=1, column=20, padx=10, pady=10, sticky="nsew")
 
-        # Treeview to display users
+        
         cols = ("Privileges", "Username", "Password", "Id")
         self.user_treeview = ttk.Treeview(self, columns=cols, show='headings', height=10)
         self.user_treeview.heading('Privileges', text='Privileges')
@@ -42,31 +42,31 @@ class AdminFrame(Frame):
         self.user_treeview.column("Username", anchor="center", width=100)
         self.user_treeview.column("Password", anchor="center", width=100)
         self.user_treeview.column("Id", anchor="center", width=50)
-        self.user_treeview.bind("<Button-3>", self.on_right_click)  # Right-click menu binding
+        self.user_treeview.bind("<Button-3>", self.on_right_click)  
         self.update_tree()
         self.user_treeview.grid(row=2, column=0, columnspan=20, padx=10, pady=10, sticky="nsew")
 
-        # Logout and Delete Buttons
+        
         logout_button = ttk.Button(self, text="Logout", command=self.logout)
         logout_button.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
         
         delete_button = ttk.Button(self, text="Delete Selected", command=self.delete_index)
         delete_button.grid(row=3, column=18, columnspan=3, padx=10, pady=10, sticky="nsew")
 
-        # Center and configure grid weights
+        
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(20, weight=1)
         self.grid_rowconfigure(2, weight=1)
 
     def update_tree(self):
-        # Refresh the Treeview (repopulate with updated data)
+        
         self.user_treeview.delete(*self.user_treeview.get_children())
         result = tree()
         for row in result:
             self.user_treeview.insert('', END, values=row)
 
     def logout(self):
-        # Switch back to the login page
+        
         self.master.switch_to_login()
 
     def delete_index(self):
@@ -75,7 +75,7 @@ class AdminFrame(Frame):
             item_values = self.user_treeview.item(selected_item)['values']
             user_id = int(item_values[3])
 
-            # Delete the user from the database
+            
             delete(user_id)
             self.update_tree()
             messagebox.showinfo("Success", "User deleted successfully")
@@ -94,14 +94,14 @@ class AdminFrame(Frame):
         messagebox.showinfo("Success", "User added successfully")
 
     def on_right_click(self, event):
-        # Create a context menu on right-click
+        
         item = self.user_treeview.identify_row(event.y)
         if item:
             menu = Menu(self, tearoff=0)
             menu.add_command(label="Delete", command=self.delete_index)
             menu.tk_popup(event.x_root, event.y_root)
 
-# Example of how to use the AdminFrame
+
 if __name__ == "__main__":
     root = Tk()
     root.title("Admin Panel")
